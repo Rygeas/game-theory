@@ -1,23 +1,25 @@
 import { useRef, useEffect } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import LottieView from "lottie-react-native";
+import { useTheme } from "react-native-paper";
+import { AppTheme } from "@/constants/theme";
 
 export default function Loading() {
   const animation = useRef<LottieView>(null);
+  const theme = useTheme<AppTheme>();
+
   useEffect(() => {
     animation.current?.play();
   }, []);
 
   return (
-    <View style={styles.animationContainer}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       <LottieView
         autoPlay
         ref={animation}
-        style={{
-          width: 200,
-          height: 200,
-          backgroundColor: "#eee",
-        }}
+        style={styles.animation}
         source={require("../assets/images/loading.json")}
       />
     </View>
@@ -25,13 +27,13 @@ export default function Loading() {
 }
 
 const styles = StyleSheet.create({
-  animationContainer: {
-    backgroundColor: "#fff",
+  container: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    flex: 1,
   },
-  buttonContainer: {
-    paddingTop: 20,
+  animation: {
+    width: 200,
+    height: 200,
   },
 });
