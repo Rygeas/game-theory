@@ -19,6 +19,9 @@ import {
   Inter_600SemiBold,
 } from "@expo-google-fonts/inter";
 import "@/constants/i18n";
+import Purchases from "react-native-purchases";
+import { Platform } from "react-native";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +59,13 @@ export default function RootLayout() {
     Inter_500Medium,
     Inter_600SemiBold,
   });
+  useEffect(() => {
+    if (Platform.OS === "ios") {
+      Purchases.configure({
+        apiKey: process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY!,
+      });
+    }
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>

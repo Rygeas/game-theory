@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rygeas.gametheory"
+      "bundleIdentifier": "com.rygeas.equilibra"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,6 +19,7 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
+      "package": "com.rygeas.equilibra",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
