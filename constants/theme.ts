@@ -102,5 +102,5 @@ export const theme = {
     error: "#a73b21",
     onError: "#ffffff",
   },
-  roundness: 6, // 1.5rem ≈ 24px için Card'larda override yapacağız
+  roundness: 6,
 };

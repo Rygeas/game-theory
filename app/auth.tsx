@@ -1,6 +1,6 @@
 import { supabase } from "@/utils/supabase";
 import React, { useState, useRef } from "react";
-import { Alert, Animated, StyleSheet, View } from "react-native";
+import { Alert, Animated, Image, StyleSheet, View } from "react-native";
 import {
   Button,
   HelperText,
@@ -92,7 +92,7 @@ export default function Auth() {
   const isEmailValid = email.length === 0 || /\S+@\S+\.\S+/.test(email);
 
   return (
-    <Screen hasHeader={false}>
+    <Screen hasHeader={false} padding={24}>
       <View style={styles.container}>
         <Surface
           elevation={1}
@@ -106,20 +106,11 @@ export default function Auth() {
         >
           <Animated.View style={{ opacity: fadeAnim }}>
             <View style={styles.header}>
-              <Surface
-                elevation={0}
-                style={[
-                  styles.logoMark,
-                  { backgroundColor: theme.colors.primaryContainer },
-                ]}
-              >
-                <Text
-                  variant="titleLarge"
-                  style={{ color: theme.colors.onPrimaryContainer }}
-                >
-                  PM
-                </Text>
-              </Surface>
+              <Image
+                source={require("@/assets/icons/splash-icon-dark.png")}
+                style={styles.logoMark}
+                resizeMode="contain"
+              />
 
               <Text
                 variant="headlineMedium"
@@ -252,15 +243,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingVertical: 24,
   },
-  topAccent: {
-    height: 5,
-    width: 56,
-    borderRadius: 999,
-    alignSelf: "center",
-    marginBottom: 28,
-  },
+
   card: {
     borderRadius: 24,
     padding: 24,
@@ -274,8 +258,6 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 18,
-    alignItems: "center",
-    justifyContent: "center",
     marginBottom: 16,
   },
   title: {
@@ -300,6 +282,7 @@ const styles = StyleSheet.create({
   },
   inputContent: {
     fontSize: 15,
+    flex: 1,
   },
   primaryButton: {
     marginTop: 14,

@@ -85,5 +85,7 @@ export default {
     switchToSignUp: "Kayıt olun",
     switchToSignIn: "Giriş yapın",
     checkEmail: "Doğrulama için e-postanızı kontrol edin!",
+    fillAllFields: "Lütfen tüm alanları doldurun",
+    invalidEmail: "Geçerli bir e-posta adresi girin",
   },
 };
