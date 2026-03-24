@@ -22,6 +22,7 @@ import "@/constants/i18n";
 import Purchases from "react-native-purchases";
 import { Platform } from "react-native";
 import { useEffect } from "react";
+import { StackScreen } from "react-native-screens";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +38,12 @@ function RootNavigator() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="paywall"
+          options={{ headerShown: false, presentation: "modal" }}
+        />
       </Stack.Protected>
+
       <Stack.Protected guard={!isLoggedIn}>
         <Stack.Screen
           name="auth"

@@ -6,10 +6,11 @@ import { Screen } from "@/components/Screen";
 import { router } from "expo-router";
 import { usePromise } from "../../../context/evolationContext";
 import { useAuth } from "@/context/authContext";
-import { useCreateStory } from "@/hooks/api/useStories";
+import { useCreateStory, useStoryLimit } from "@/hooks/api/useStories";
 import { useTheme } from "react-native-paper";
 import { AppTheme } from "@/constants/theme";
 import { useTranslation } from "react-i18next";
+import { useIsPremium } from "@/hooks/useIsPremium";
 
 const Home = () => {
   const { userId } = useAuth();
@@ -17,12 +18,21 @@ const Home = () => {
   const { mutate: createStory, isPending } = useCreateStory();
   const theme = useTheme<AppTheme>();
   const { t } = useTranslation();
+  const { isPremium } = useIsPremium();
 
+  const { canCreate, remaining } = useStoryLimit(isPremium, userId!);
   const { handleSubmit, control, reset } = useForm({
     defaultValues: { title: "", story: "" },
   });
+  console.log(canCreate, "--------------");
 
   const onSubmit = (form: { story: string; title: string }) => {
+    if (!canCreate) {
+      console.log("çalıştım");
+
+      router.push("/paywall");
+      return;
+    }
     createStory(
       { userId: userId!, title: form.title, story: form.story },
       {

@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rygeas.equilibra"
+      "bundleIdentifier": "com.rygeas.equilibra",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -43,11 +46,16 @@
       ],
       "expo-font",
       "expo-localization"
-      
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "365dec81-8713-4548-8bc7-dd76f83fe8aa"
+      }
     }
   }
 }
