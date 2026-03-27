@@ -82,9 +82,9 @@ export default function Auth() {
       Alert.alert(t("common.error"), error.message);
     }
 
-    if (!session) {
-      Alert.alert(t("auth.checkEmail"));
-    }
+    // if (!session) {
+    // Alert.alert(t("auth.checkEmail"));
+    // }
 
     setLoading(false);
   }

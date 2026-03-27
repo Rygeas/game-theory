@@ -13,18 +13,17 @@ import { useTranslation } from "react-i18next";
 import { useIsPremium } from "@/hooks/useIsPremium";
 
 const Home = () => {
-  const { userId } = useAuth();
   const { setDraft } = usePromise();
   const { mutate: createStory, isPending } = useCreateStory();
   const theme = useTheme<AppTheme>();
   const { t } = useTranslation();
   const { isPremium } = useIsPremium();
+  const { userId } = useAuth();
 
   const { canCreate, remaining } = useStoryLimit(isPremium, userId!);
   const { handleSubmit, control, reset } = useForm({
     defaultValues: { title: "", story: "" },
   });
-  console.log(canCreate, "--------------");
 
   const onSubmit = (form: { story: string; title: string }) => {
     if (!canCreate) {

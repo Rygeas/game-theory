@@ -55,16 +55,28 @@ export const createStory = async ({
   });
 
   if (entryErr) throw entryErr;
+  await supabase.rpc("increment_story_count", { user_id: userId });
 
   return { storyId: storyRow.id as string };
 };
 
 export const fetchStoryCount = async (userId: string): Promise<number> => {
-  const { count, error } = await supabase
-    .from("stories")
-    .select("*", { count: "exact", head: true })
-    .eq("user_id", userId);
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("story_count")
+    .eq("id", userId)
+    .single();
 
   if (error) throw error;
-  return count ?? 0;
+  return data?.story_count ?? 0;
+};
+export const fetchStoryLimit = async (): Promise<number> => {
+  const { data, error } = await supabase
+    .from("config")
+    .select("value")
+    .eq("key", "free_story_limit")
+    .single();
+
+  if (error) throw error;
+  return Number(data?.value ?? 1);
 };

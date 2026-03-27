@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Text, Card, Divider, List, Button } from "react-native-paper";
 import { router, useNavigation } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Screen } from "@/components/Screen";
 import Loading from "@/components/Loading";
 import { useAnalysis } from "@/hooks/api/useAnaliysis";
@@ -12,6 +13,7 @@ import AddEventModal from "@/components/ui/AddEventModal";
 import { useAddEntry } from "@/hooks/api/useAddEntry";
 
 const GameTheoryParse = () => {
+  const { t } = useTranslation();
   const { draft } = usePromise();
   const navigation = useNavigation();
   const theme = useTheme<AppTheme>();
@@ -35,7 +37,7 @@ const GameTheoryParse = () => {
               fontFamily: "Inter_500Medium",
             }}
           >
-            Geri
+            {t("common.goBack")}
           </Text>
         </Pressable>
       ),
@@ -49,14 +51,14 @@ const GameTheoryParse = () => {
           variant="bodyMedium"
           style={{ color: theme.colors.onSurfaceVariant, marginBottom: 16 }}
         >
-          Gösterilecek veri yok.
+          {t("analysis.noData")}
         </Text>
         <Button
           mode="contained"
           onPress={() => router.replace("/home")}
           style={styles.button}
         >
-          Geri Dön
+          {t("analysis.goHome")}
         </Button>
       </Screen>
     );
@@ -71,21 +73,21 @@ const GameTheoryParse = () => {
           variant="bodyMedium"
           style={{ color: theme.colors.error, marginBottom: 16 }}
         >
-          Analiz oluşturulamadı.
+          {t("analysis.error")}
         </Text>
         <Button
           mode="contained"
           onPress={() => refetch()}
           style={styles.button}
         >
-          Tekrar Dene
+          {t("analysis.retry")}
         </Button>
         <Button
           mode="outlined"
           onPress={() => router.replace("/home")}
           style={[styles.button, { marginTop: 8 }]}
         >
-          Geri Dön
+          {t("analysis.goHome")}
         </Button>
       </Screen>
     );
@@ -106,7 +108,7 @@ const GameTheoryParse = () => {
     <Screen scroll>
       <Card style={cardStyle}>
         <Card.Title
-          title="Amaç"
+          title={t("analysis.objective")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
         />
@@ -119,7 +121,7 @@ const GameTheoryParse = () => {
 
       <Card style={cardStyle}>
         <Card.Title
-          title="Oyuncular"
+          title={t("analysis.players")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
         />
@@ -138,7 +140,7 @@ const GameTheoryParse = () => {
 
       <Card style={cardStyle}>
         <Card.Title
-          title="Stratejiler"
+          title={t("analysis.strategies")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
         />
@@ -182,11 +184,11 @@ const GameTheoryParse = () => {
 
       <Card style={cardStyle}>
         <Card.Title
-          title="Denge Noktası"
+          title={t("analysis.equilibrium")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
           subtitle={
-            analysis.equilibrium.is_stable ? "✅ Kararlı" : "⚠️ Kararsız"
+            analysis.equilibrium.is_stable ? t("analysis.stable") : t("analysis.unstable")
           }
           subtitleStyle={{ color: theme.colors.onSurfaceVariant, fontSize: 13 }}
         />
@@ -199,7 +201,7 @@ const GameTheoryParse = () => {
 
       <Card style={cardStyle}>
         <Card.Title
-          title="Değerlendirme"
+          title={t("analysis.evaluation")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
         />
@@ -216,7 +218,7 @@ const GameTheoryParse = () => {
 
       <Card style={cardStyle}>
         <Card.Title
-          title="Öneriler"
+          title={t("analysis.recommendations")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
         />
@@ -268,7 +270,7 @@ const GameTheoryParse = () => {
 
       <Card style={cardStyle}>
         <Card.Title
-          title="Öncelikler"
+          title={t("analysis.priorities")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
         />
@@ -297,7 +299,7 @@ const GameTheoryParse = () => {
 
       <Card style={cardStyle}>
         <Card.Title
-          title="Eksik Bilgiler"
+          title={t("analysis.missingInfo")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
         />
@@ -316,7 +318,7 @@ const GameTheoryParse = () => {
 
       <Card style={cardStyle}>
         <Card.Title
-          title="Varsayımlar"
+          title={t("analysis.assumptions")}
           titleVariant="titleMedium"
           titleStyle={titleStyle}
         />
@@ -340,7 +342,7 @@ const GameTheoryParse = () => {
           style={styles.button}
           contentStyle={{ paddingVertical: 6 }}
         >
-          Ana Sayfaya Dön
+          {t("analysis.goHome")}
         </Button>
         <Button
           mode="outlined"
@@ -348,7 +350,7 @@ const GameTheoryParse = () => {
           style={styles.button}
           contentStyle={{ paddingVertical: 6 }}
         >
-          + Yeni Gelişme Ekle
+          {t("analysis.addDevelopment")}
         </Button>
       </View>
 

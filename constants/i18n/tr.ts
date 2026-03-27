@@ -54,6 +54,7 @@ export default {
     language: "Dil Ayarı",
     Türkçe: "Türkçe",
     English: "İngilizce",
+    remainingAnalysis: "Kalan Analiz Hakkı",
   },
   drawer: {
     home: "Ana Sayfa",
@@ -68,6 +69,7 @@ export default {
     goHome: "Ana Sayfaya Dön",
     storyDetail: "Hikaye Detayı",
     versionDetail: "Analiz Detayı",
+    error: "Hata",
   },
   auth: {
     welcomeBack: "Tekrar hoş geldiniz",

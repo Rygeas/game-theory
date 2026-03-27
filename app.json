@@ -14,11 +14,10 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },
-      "icon":{
-        "dark":"./assets/icons/ios-dark.png",
-        "light":"./assets/icons/ios-light.png",    
-        "tinted":"./assets/icons/ios-tinted.png"
-  
+      "icon": {
+        "dark": "./assets/icons/ios-dark.png",
+        "light": "./assets/icons/ios-light.png",
+        "tinted": "./assets/icons/ios-tinted.png"
       }
     },
     "android": {
@@ -60,7 +59,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "365dec81-8713-4548-8bc7-dd76f83fe8aa"
+        "projectId": "19dcdcbe-9392-483f-9c89-813629306d49"
       }
     }
   }

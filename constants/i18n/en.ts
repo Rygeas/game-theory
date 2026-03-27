@@ -7,6 +7,7 @@ export default {
     submit: "Analyze",
   },
   analysis: {
+    analysis: "Analysis",
     objective: "Objective",
     players: "Players",
     strategies: "Strategies",
@@ -55,6 +56,7 @@ export default {
     language: "Language Settings",
     Türkçe: "Turkish",
     English: "English",
+    remainingAnalysis: "Remaining analyses",
   },
   drawer: {
     home: "Home",
@@ -68,6 +70,7 @@ export default {
     goHome: "Go to Home",
     storyDetail: "Story Detail",
     versionDetail: "Analysis Detail",
+    error: "Error",
   },
   auth: {
     welcomeBack: "Welcome Back",
@@ -87,5 +90,11 @@ export default {
     checkEmail: "Please check your inbox for email verification!",
     fillAllFields: "Please fill in all fields",
     invalidEmail: "Please enter a valid email address",
+    errorInvalidCredentials: "Incorrect email or password.",
+    errorEmailInUse: "This email address is already in use.",
+    errorWeakPassword: "Password must be at least 6 characters.",
+    errorNetwork: "Connection issue. Please check your internet connection.",
+    errorTooManyRequests: "Too many attempts. Please wait a moment.",
+    errorGeneric: "Something went wrong. Please try again.",
   },
 };

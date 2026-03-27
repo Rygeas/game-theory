@@ -27,8 +27,15 @@ import { StackScreen } from "react-native-screens";
 const queryClient = new QueryClient();
 
 function RootNavigator() {
-  const { isLoggedIn } = useAuth();
-
+  const { isLoggedIn, userId } = useAuth();
+  useEffect(() => {
+    if (Platform.OS === "ios") {
+      Purchases.configure({
+        apiKey: process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY!,
+        appUserID: userId,
+      });
+    }
+  }, []);
   return (
     <Stack>
       <Stack.Protected guard={isLoggedIn}>
@@ -65,13 +72,7 @@ export default function RootLayout() {
     Inter_500Medium,
     Inter_600SemiBold,
   });
-  useEffect(() => {
-    if (Platform.OS === "ios") {
-      Purchases.configure({
-        apiKey: process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY!,
-      });
-    }
-  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>

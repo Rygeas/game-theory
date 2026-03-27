@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
-import { Text, Avatar, Button, Menu, Divider } from "react-native-paper";
+import {
+  Text,
+  Avatar,
+  Button,
+  Menu,
+  Divider,
+  Surface,
+} from "react-native-paper";
 import { useAuth } from "@/context/authContext";
 import { Screen } from "@/components/Screen";
 import { AppTheme } from "@/constants/theme";
@@ -8,13 +15,17 @@ import SignOutButton from "@/components/logout";
 import { useTranslation } from "react-i18next";
 import { changeLanguage, LANGUAGES } from "@/constants/i18n";
 import { useTheme } from "react-native-paper";
+import { useIsPremium } from "@/hooks/useIsPremium";
+import { useStoryLimit } from "@/hooks/api/useStories";
 
 const Profile = () => {
-  const { email } = useAuth();
+  const { email, userId } = useAuth();
   const theme = useTheme<AppTheme>();
   const { i18n } = useTranslation();
   const [menuVisible, setMenuVisible] = useState(false);
   const { t } = useTranslation();
+  const { isPremium } = useIsPremium();
+  const { remaining, storyCount } = useStoryLimit(isPremium, userId!);
 
   const currentLang = LANGUAGES.find((l) => l.code === i18n.language);
   const { width } = useWindowDimensions();
@@ -36,13 +47,45 @@ const Profile = () => {
             {email ?? "—"}
           </Text>
 
+          {/* Kullanım Hakkı */}
+          {!isPremium && (
+            <Surface
+              elevation={0}
+              style={[
+                styles.limitCard,
+                {
+                  backgroundColor: theme.colors.surfaceContainerLow,
+                  borderColor: theme.colors.outline,
+                },
+              ]}
+            >
+              <View style={styles.limitRow}>
+                <Text
+                  variant="bodyMedium"
+                  style={{ color: theme.colors.onSurface }}
+                >
+                  {t("profile.remainingAnalysis")}
+                </Text>
+                <Text
+                  variant="titleMedium"
+                  style={{
+                    color: theme.colors.primary,
+                    fontFamily: "Manrope_600SemiBold",
+                  }}
+                >
+                  {remaining}
+                </Text>
+              </View>
+            </Surface>
+          )}
+
           <View style={{ width: "100%" }}>
             <Text variant="labelLarge">{t("profile.language")}</Text>
             <Menu
               visible={menuVisible}
               onDismiss={() => setMenuVisible(false)}
               contentStyle={{
-                width: width - 32, // padding çıkar
+                width: width - 32,
                 backgroundColor: theme.colors.surfaceContainerLowest,
               }}
               anchor={
@@ -109,5 +152,16 @@ const styles = StyleSheet.create({
   },
   langButton: {
     marginTop: 4,
+  },
+  limitCard: {
+    width: "100%",
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 16,
+  },
+  limitRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });

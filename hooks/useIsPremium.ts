@@ -11,6 +11,7 @@ export const useIsPremium = () => {
       setIsPremium(
         customerInfo.entitlements.active["Equilibra Pro"] !== undefined,
       );
+      console.log("RC User ID:", await Purchases.getAppUserID());
     } catch (e) {
       console.error("RevenueCat error:", e);
     } finally {

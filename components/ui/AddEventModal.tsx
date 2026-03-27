@@ -5,11 +5,16 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   TouchableWithoutFeedback,
 } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { TextInput } from "react-native";
+import { useTranslation } from "react-i18next";
+import { useIsPremium } from "@/hooks/useIsPremium";
+import { useAuth } from "@/context/authContext";
+import { useStoryLimit } from "@/hooks/api/useStories";
+import { router } from "expo-router";
+import { theme } from "@/constants/theme";
 
 type AddEventModalProps = {
   visible: boolean;
@@ -24,10 +29,19 @@ const AddEventModal = ({
   onSubmit,
   isLoading,
 }: AddEventModalProps) => {
+  const { t } = useTranslation();
   const [text, setText] = useState("");
+  const { isPremium } = useIsPremium();
+  const { userId } = useAuth();
+
+  const { canCreate } = useStoryLimit(isPremium, userId!);
 
   const handleSubmit = () => {
     if (!text.trim()) return;
+    if (!canCreate) {
+      router.push("/paywall");
+      return;
+    }
     onSubmit(text.trim());
     setText("");
   };
@@ -51,19 +65,25 @@ const AddEventModal = ({
           <View style={styles.handle} />
 
           <Text variant="titleLarge" style={styles.title}>
-            Ne oldu?
+            {t("modal.title")}
           </Text>
           <Text variant="bodySmall" style={styles.subtitle}>
-            Yeni bir gelişme veya düşünceni yaz, analiz güncellenecek.
+            {t("modal.subtitle")}
           </Text>
 
           <TextInput
-            placeholder="Bugün şunu fark ettim..."
-            placeholderTextColor="#aaa"
+            placeholder={t("modal.placeholder")}
+            placeholderTextColor={theme.colors.onSurfaceVariant}
             value={text}
             onChangeText={setText}
             multiline
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                backgroundColor: theme.colors.surfaceContainerLow,
+                color: theme.colors.onBackground,
+              },
+            ]}
             textAlignVertical="top"
           />
 
@@ -74,13 +94,21 @@ const AddEventModal = ({
             disabled={!text.trim() || isLoading}
             contentStyle={{ paddingVertical: 6 }}
             style={styles.submitButton}
+            buttonColor={theme.colors.primary}
+            textColor={theme.colors.onPrimary}
           >
-            Analizi Güncelle
+            {t("modal.submit")}
           </Button>
 
-          <Pressable onPress={onClose} style={styles.cancelButton}>
-            <Text style={styles.cancelText}>Vazgeç</Text>
-          </Pressable>
+          <Button
+            onPress={onClose}
+            mode="outlined"
+            style={styles.cancelButton}
+            contentStyle={{ paddingVertical: 4 }}
+            textColor={theme.colors.onSurfaceVariant}
+          >
+            {t("modal.cancel")}
+          </Button>
         </View>
       </KeyboardAvoidingView>
     </Modal>
@@ -101,7 +129,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   sheet: {
-    backgroundColor: "#fff",
+    backgroundColor: theme.colors.background,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingHorizontal: 24,
@@ -112,25 +140,23 @@ const styles = StyleSheet.create({
   handle: {
     width: 36,
     height: 4,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: theme.colors.surfaceContainerHigh,
     borderRadius: 2,
     alignSelf: "center",
     marginBottom: 8,
   },
   title: {
     fontWeight: "bold",
-    color: "#1A1A2E",
+    color: theme.colors.onBackground,
   },
   subtitle: {
-    color: "#888",
+    color: theme.colors.onSurfaceVariant,
     marginTop: -4,
   },
   input: {
-    backgroundColor: "#F5F5F5",
     borderRadius: 12,
     padding: 16,
     fontSize: 15,
-    color: "#1A1A2E",
     height: 140,
     marginTop: 4,
   },
@@ -139,11 +165,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   cancelButton: {
-    alignItems: "center",
-    paddingVertical: 4,
-  },
-  cancelText: {
-    color: "#888",
-    fontSize: 14,
+    borderRadius: 12,
   },
 });
